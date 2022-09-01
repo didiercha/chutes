@@ -61,7 +61,7 @@ void loop()
       delay(3000);
 
       while (digitalRead(PIN_CHRONO) == LOW) // etatPhotodiode = digitalRead(PIN_CHRONO);
-        // si la photodiode est éclairée, il faut la masquer
+                                             // si la photodiode est éclairée, il faut la masquer
       {
         LCD.setCursor(0, 1); // affichage 2eme ligne
         LCD.print("Masquer PhotoDiode");
@@ -93,7 +93,6 @@ void loop()
       etatChrono = 1;
       LCD.print(etatChrono); // pour éviter que timedebut soit réécrit dans la boucle
       timedebut = micros();  // enregistre l'heure de la chute
-
     }
 
     while (phase == 1 && etatChrono == 1) //
@@ -141,7 +140,7 @@ void loop()
 
   {
     float somme = mesDurees[0]; // calcule la moyenne des durées
-    for (int j = 1; j < NbExp ; j++)
+    for (int j = 1; j < NbExp; j++)
     {
       somme = somme + mesDurees[j];
       Serial.println("somme");
@@ -152,31 +151,35 @@ void loop()
     LCD.print(moyenne);
     LCD.print(" ms *");
     LCD.print(i); // vérifie que i =NbExp ????
- Serial.print("moyenne :");
-      Serial.println(moyenne); Serial.println(NbExp);
-
+    Serial.print("moyenne :");
+    Serial.println(moyenne);
+    Serial.println(NbExp);
 
     // calcul de l'écart type
     for (int j = 0; j < NbExp; j++)
     {
-      Carre[j] = sq(mesDurees[j]-moyenne);
+      Carre[j] = sq(mesDurees[j] - moyenne);
       Serial.print(j);
       Serial.print("carre  ");
       Serial.println(Carre[j]);
     }
     for (int j = 0; j < NbExp; j++)
     {
-      variance2 = variance2 + Carre[j] ;
+      variance2 = variance2 + Carre[j];
     }
-    Serial.print("variance2  "); Serial.print(variance2);//carré de la variance
+    Serial.print("variance2  ");
+    Serial.print(variance2); // carré de la variance
     Ecart = sqrt(variance2 / NbExp);
-    Serial.print("Ecart  "); Serial.println(Ecart);
-     LCD.setCursor(0, 0);
-    LCD.print("Duree ");LCD.print(moyenne);
+    Serial.print("Ecart  ");
+    Serial.println(Ecart);
+    LCD.setCursor(0, 0);
+    LCD.print("Duree ");
+    LCD.print(moyenne);
     LCD.print(" ms *");
-     LCD.setCursor(0, 1);LCD.print("ecart type ");
+    LCD.setCursor(0, 1);
+    LCD.print("ecart type ");
     LCD.print(Ecart);
     LCD.print(" ms *");
-    phase = 8; //fin des calculs
+    phase = 8; //   fin des calculs
   }
 }
